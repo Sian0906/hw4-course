@@ -26,7 +26,7 @@ window.fbAsyncInit = function() { //fb登入資料
             FB.api( '/me?fields=name,picture,likes.limit(60)', function(response){
               // 把資訊插入到html裡，並顯示出來
               $('.user-name').text(response.name);//插名字
-              $('.user-photo').attr('stc',response.picture.data.url);//插圖片
+              $('.user-photo').attr('src',response.picture.data.url);//插圖片
               $('#user').removeClass('hide');
               // ---------------
               // 讀取 like 的列表，並儲存到 likes, 以及下一組資料的連結到 next
@@ -66,9 +66,11 @@ var loadPagesInfo = function(pages){
       $page.find('.title a').text(response.name).attr('href',response.link);
       $page.find('.about').text(response.about);
       $page.find('.likes').text(response.likes);
-      FB.api(/*輸入圖片連結*/, function(response){
+      FB.api(item.id+'/picture?type=large', function(response){
         // 塞資料到 html 中
+        $page.find('.thumbnail img').attr('src',response.data.url);
         counter++;
+        $page.appendTo(current);
         // 塞完資料以後處理一下斷行
         if(counter===pages.length){
           // 利用 .current div:nth-child(3n)，讓每三個page 斷行

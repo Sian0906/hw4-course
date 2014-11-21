@@ -8,9 +8,9 @@ var $listRoot = $('.page-list');
 
 
 // 設定 Facebook AppID
-window.fbAsyncInit = function() {
+window.fbAsyncInit = function() { //fb登入資料
     FB.init({
-        appId: '1500484696892805', // 若可以，請換成自己的 App ID !
+        appId: '780023638734685', // 請換成自己的 App ID !
         xfbml: true,
         version: 'v2.2'
     });
@@ -20,13 +20,16 @@ window.fbAsyncInit = function() {
       $($listRoot).empty();
       $('#moreBtn').addClass('hide');
       // 臉書登入SDK
-      FB.login(function(response) {
-        if(response.authResponse) {
+      FB.login(function(response) {//授權登入
+        if(response.authResponse) {//成功
             //讀取個人信息
-            FB.api( /*填入我們要的request*/, function(response){
+            FB.api( '/me?fields=name,picture', function(response){
               // 把資訊插入到html裡，並顯示出來
-
+              $('.user-name').text(response.name);//插名字
+              $('.user-photo').attr('stc',response.picture.data.url);//插圖片
+              $('#user').removeClass('hide');
               // ---------------
+
               // 讀取 like 的列表，並儲存到 likes, 以及下一組資料的連結到 next
 
               //把讀到的資料放進html

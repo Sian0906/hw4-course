@@ -47,7 +47,7 @@ window.fbAsyncInit = function() { //fb登入資料
     $('#moreBtn').click(function(e){
       $.getJSON( $(this).data('next'), function(response){
         //更新列表資料
-
+        loadPagesInfo(response.data);
       })
       e.preventDefault();
     });

@@ -23,15 +23,14 @@ window.fbAsyncInit = function() { //fb登入資料
       FB.login(function(response) {//授權登入
         if(response.authResponse) {//成功
             //讀取個人信息
-            FB.api( '/me?fields=name,picture', function(response){
+            FB.api( '/me?fields=name,picture,likes.limit(60)', function(response){
               // 把資訊插入到html裡，並顯示出來
               $('.user-name').text(response.name);//插名字
               $('.user-photo').attr('stc',response.picture.data.url);//插圖片
               $('#user').removeClass('hide');
               // ---------------
-
               // 讀取 like 的列表，並儲存到 likes, 以及下一組資料的連結到 next
-
+              var likes = response.like.data;
               //把讀到的資料放進html
               loadPagesInfo(likes);
               // save next request url to moreBtn and show it
@@ -54,10 +53,10 @@ window.fbAsyncInit = function() { //fb登入資料
 
 
 // load each pages info and insert to html
-// var loadPagesInfo = function(pages){
+var loadPagesInfo = function(pages){
 
-//   var counter = 0, //計算現在讀完資料沒
-//       current = $('<div class="current"></div>').appendTo($listRoot); //定位當前的資料
+  var counter = 0, //計算現在讀完資料沒
+      current = $('<div class="current"></div>').appendTo($listRoot); //定位當前的資料
 
 //   pages.forEach(function(item, index){
 //     //從 template 塞資料
